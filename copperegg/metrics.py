@@ -1,5 +1,6 @@
 import requests
 import json
+from .utils import handle_errors, return_json
 
 DEFAULT_API_HOST = 'https://api.copperegg.com'
 DEFAULT_API_VERSION = 'v2'
@@ -57,18 +58,22 @@ class Metrics(object):
         }
         return self._post('/dashboards.json', data)
 
+    @return_json
+    @handle_errors
     def _get(self, path, params=None, data=None):
         headers = None
         if data is not None:
             data = json.dumps(data)
             headers = {'content-type': 'application/json'}
         return requests.get(self.base_url + path, auth=(self.api_key, None),
-                            params=params, data=data, headers=headers).json()
+                            params=params, data=data, headers=headers)
 
+    @return_json
+    @handle_errors
     def _post(self, path, data=None):
         headers = None
         if data is not None:
             data = json.dumps(data)
             headers = {'content-type': 'application/json'}
         return requests.post(self.base_url + path, auth=(self.api_key, None),
-                             data=data, headers=headers).json()
+                             data=data, headers=headers)
