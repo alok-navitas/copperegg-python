@@ -90,7 +90,6 @@ class Memcached(object):
             group = self.api.create_metric_group(self.group_name, [
                 m.to_copperegg_metric() for m in self.metrics
             ])
-        print group
         return group
 
     def make_server_str(self, server):
@@ -123,8 +122,3 @@ class Memcached(object):
             for identifier, values in sample.iteritems():
                 self.api.store_sample(self.group_name, identifier,
                                       int(time.time()), values)
-
-if __name__ == '__main__':
-    agent = Memcached('memcached_testing', [{'hostname': '127.0.0.1', 'port': 11211}])
-    agent.create_metric_group()
-    agent.report()
