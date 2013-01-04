@@ -54,3 +54,32 @@ metrics.store_sample('coffee_group', 'lolcathost', int(time.time()), {
     'current_amount': 0.1
 })
 ```
+
+### Monitoring
+
+Create a config file `config.json`:
+```json
+{
+    "api_key": "API_KEY",
+    "agents": {
+        "memcached": {
+            "plugin_module": "agents.memcached",
+            "plugin_class": "Memcached",
+            "dashboard_name": "Memcached Dashboard",
+            "servers": [
+                {
+                    "name": "lolcathost",
+                    "hostname": "127.0.0.1",
+                    "port": 11211
+                }
+            ],
+            "interval": 60
+        }
+    }
+}
+```
+
+Start the agent:
+```
+python monitor.py -g memcached
+```
