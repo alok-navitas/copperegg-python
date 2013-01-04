@@ -56,9 +56,9 @@ class Agent(object):
                     widget = {
                         'type': 'metric',
                         'style': 'both',
-                        'metric': [group_name, metric['position'], metric['label']],
+                        'metric': [group_name, int(metric['position']), metric['label']],
                         'match': 'select',
-                        'match_param': server['hostname']
+                        'match_param': server['name']
                     }
                     widgets.append(widget)
             dashboard = self.api.create_dashboard(self.dashboard_name, widgets)
