@@ -18,7 +18,7 @@ class Metrics(object):
             'timestamp': timestamp,
             'values': values,
         }
-        self._post('/samples/{}.json'.format(group_name), data=sample)
+        self._post('/samples/{}.json'.format(group_name), data=sample, ignore_response=True)
 
     def samples(self, group_name, metric_name, start_time=None, duration=None, sample_size=None):
         data = {
