@@ -53,7 +53,8 @@ class Metrics(object):
         data = {
             'name': dashboard_name,
             'data': {
-                'widgets': dict((str(t[0]), t[1]) for t in enumerate(widgets))
+                'widgets': dict((str(t[0]), t[1]) for t in enumerate(widgets)),
+                'order': [str(t[0]) for t in enumerate(widgets)]
             }
         }
         return self._post('/dashboards.json', data)
