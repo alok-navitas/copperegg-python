@@ -2,14 +2,14 @@ import copperegg.metrics
 import memcache
 import time
 from functools import partial
-from operator import itemgetter
+from operator import methodcaller
 
 
 class Metric(object):
 
     def __init__(self, name, getter=None, label=None, kind='gauge', type=int):
         self.name = name
-        self.getter = getter if getter else itemgetter(name)
+        self.getter = getter if getter else methodcaller('get', name)
         self.label = label if label else name
         self.kind = kind
         self.type = type
@@ -96,7 +96,8 @@ class Agent(object):
                 server_data = {}
                 for metric in self.metrics:
                     value = metric.getter(stats)
-                    server_data[metric.name] = metric.type(value)
+                    if value is not None:
+                        server_data[metric.name] = metric.type(value)
                 data[server_name] = server_data
         return data
 
