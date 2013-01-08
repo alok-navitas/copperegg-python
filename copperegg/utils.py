@@ -40,6 +40,15 @@ def handle_errors(fn):
 def return_json(fn):
     @wraps(fn)
     def wrapped(*args, **kwargs):
+        ignore_response = False
+        if 'ignore_response' in kwargs:
+            ignore_response = kwargs['ignore_response']
+            del kwargs['ignore_response']
+
         response = fn(*args, **kwargs)
-        return try_get_json(response)
+
+        if ignore_response:
+            return None
+        else:
+            return try_get_json(response)
     return wrapped
